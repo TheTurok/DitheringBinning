@@ -1,7 +1,7 @@
 import time
 
 import coin as c
-import bins as b
+import bin as b
 import math
 
 
@@ -27,7 +27,7 @@ class DitheringBinning:
     def setup_bins(self, labels, count):
         self.bin_count = count
         for i in range(0, count):
-            empty_bin = b.Bins(labels[i])
+            empty_bin = b.Bin(labels[i])
             self.bins.append(empty_bin)
 
     def distribution_by_value(self, coin_list, bin_list):
@@ -58,6 +58,11 @@ if __name__ == "__main__":
 
     db = DitheringBinning()
     db.binning(x, weights, bl, bc)
+    for bin in db.bins:
+        print(bin.get_label())
+        for coin in bin.get_coins():
+            print(coin.get_value())
+
 
     end_time = time.time()
     print("Total time to run this program: " + str(end_time-start_time) + " seconds")

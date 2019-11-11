@@ -1,6 +1,6 @@
 
 
-class Bins:
+class Bin:
     def __init__(self, label):
         self.label = label
         self.total_weight = 0
@@ -12,3 +12,5 @@ class Bins:
     def get_coins(self):
         return self.coins
 
+    def get_label(self):
+        return self.label
