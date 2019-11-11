@@ -11,6 +11,7 @@ class DitheringBinning:
         self.bins = []
         self.start_range = None
         self.end_range = None
+        self.total_weight
         self.bin_count = 0
 
     def setup_coins(self, values, weight):

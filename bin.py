@@ -7,6 +7,7 @@ class Bin:
         self.coins = []
 
     def add_coin(self, coin):
+        self.total_weight += coin.get_weight()
         self.coins.append(coin)
 
     def get_coins(self):
@@ -14,3 +15,6 @@ class Bin:
 
     def get_label(self):
         return self.label
+
+    def get_total_weight(self):
+        return self.total_weight
