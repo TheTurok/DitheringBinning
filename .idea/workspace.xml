@@ -4,6 +4,7 @@
     <list default="true" id="3c7c7a3c-2b7b-471c-863a-b81d9fc5cfb4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/DitheringBinning.py" beforeDir="false" afterPath="$PROJECT_DIR$/DitheringBinning.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin.py" beforeDir="false" afterPath="$PROJECT_DIR$/bin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/coin.py" beforeDir="false" afterPath="$PROJECT_DIR$/coin.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,10 +17,23 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DitheringBinning.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="64" column="27" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
+            <state relative-caret-position="187">
+              <caret line="117" column="11" lean-forward="true" selection-start-line="117" selection-start-column="11" selection-end-line="121" selection-end-column="34" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#88#357#1" />
+                <element signature="e#1004#1021#0" />
+                <element signature="e#1125#1210#0" />
+                <element signature="e#1263#1328#0" />
+                <element signature="e#1402#1425#0" />
+                <element signature="e#1465#1531#0" />
+                <element signature="e#1473#1929#0" />
+                <element signature="e#1464#1626#1" />
+                <element signature="e#1981#2120#0" />
+                <element signature="e#1972#2193#1" />
+                <element signature="e#2550#3006#0" />
+                <element signature="e#2550#2715#1" />
+                <element signature="e#3275#3588#1" />
               </folding>
             </state>
           </provider>
@@ -28,8 +42,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+            <state relative-caret-position="272">
+              <caret line="16" column="42" lean-forward="true" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -37,8 +51,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/coin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+            <state relative-caret-position="204">
+              <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -209,7 +223,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32992327" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.33638743" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3355049" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32853404" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -218,13 +232,6 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/coin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TestDitheringBinning.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -235,19 +242,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/coin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+        <state relative-caret-position="272">
+          <caret line="16" column="42" lean-forward="true" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DitheringBinning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="64" column="27" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
+        <state relative-caret-position="187">
+          <caret line="117" column="11" lean-forward="true" selection-start-line="117" selection-start-column="11" selection-end-line="121" selection-end-column="34" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#88#357#1" />
+            <element signature="e#1004#1021#0" />
+            <element signature="e#1125#1210#0" />
+            <element signature="e#1263#1328#0" />
+            <element signature="e#1402#1425#0" />
+            <element signature="e#1465#1531#0" />
+            <element signature="e#1473#1929#0" />
+            <element signature="e#1464#1626#1" />
+            <element signature="e#1981#2120#0" />
+            <element signature="e#1972#2193#1" />
+            <element signature="e#2550#3006#0" />
+            <element signature="e#2550#2715#1" />
+            <element signature="e#3275#3588#1" />
           </folding>
         </state>
       </provider>
