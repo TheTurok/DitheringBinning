@@ -2,19 +2,23 @@
 
 class Coin:
     def __init__(self, value, weight, index):
-        self.value = value
-        self.index = index
-        self.weight = weight
+        self._value = value
+        self._index = index
+        self._weight = weight
 
-    def get_weight(self):
-        return self.weight
+    @property
+    def weight(self):
+        return self._weight
 
-    def get_index(self):
+    @property
+    def index(self):
         return self.index
 
-    def set_index(self, i):
-        self.index = i
+    @index.setter
+    def index(self, index):
+        self.index = index
 
-    def get_value(self):
-        return self.value
+    @property
+    def value(self):
+        return self._value
 

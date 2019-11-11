@@ -2,19 +2,22 @@
 
 class Bin:
     def __init__(self, label):
-        self.label = label
-        self.total_weight = 0
-        self.coins = []
+        self._label = label
+        self._total_weight = 0
+        self._coins = []
+
+    @property
+    def label(self):
+        return self._label
 
     def add_coin(self, coin):
-        self.total_weight += coin.get_weight()
-        self.coins.append(coin)
+        self._total_weight += coin.weight
+        self._coins.append(coin)
 
-    def get_coins(self):
-        return self.coins
+    @property
+    def coins(self):
+        return self._coins
 
-    def get_label(self):
-        return self.label
-
-    def get_total_weight(self):
-        return self.total_weight
+    @property
+    def total_weight(self):
+        return self._total_weight

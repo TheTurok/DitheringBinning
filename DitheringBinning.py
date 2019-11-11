@@ -11,7 +11,7 @@ class DitheringBinning:
         self.bins = []
         self.start_range = None
         self.end_range = None
-        self.total_weight
+        self.total_weight = 0
         self.bin_count = 0
 
     def setup_coins(self, values, weight):
@@ -34,19 +34,21 @@ class DitheringBinning:
     def distribution_by_value(self, coin_list, bin_list):
         split = int((self.end_range - self.start_range) / self.bin_count)
 
-        for coin in coin_list:
-            fit = int((coin.get_value() - self.start_range) / split)
+        for cl in coin_list:
+            fit = int((cl.value - self.start_range) / split)
             if fit == split:
-                bin_list[fit-1].add_coin(coin)
+                bin_list[fit-1].add_coin(cl)
             else:
-                bin_list[fit].add_coin(coin)
+                bin_list[fit].add_coin(cl)
 
     def binning(self, x, weight, bin_label, bin_count):
         self.setup_coins(x, weight)
         self.setup_bins(bin_label, bin_count)
         self.distribution_by_value(self.coins,self.bins)
 
+    def dithering_balance(self, bins):
 
+        return bins
 
 
 if __name__ == "__main__":
@@ -60,10 +62,9 @@ if __name__ == "__main__":
     db = DitheringBinning()
     db.binning(x, weights, bl, bc)
     for bin in db.bins:
-        print(bin.get_label())
-        for coin in bin.get_coins():
-            print(coin.get_value())
-
+        print(bin.label)
+        for coin in bin.coins:
+            print(coin.value)
 
     end_time = time.time()
     print("Total time to run this program: " + str(end_time-start_time) + " seconds")
