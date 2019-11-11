@@ -12,6 +12,9 @@ class Coin:
     def get_index(self):
         return self.index
 
+    def set_index(self, i):
+        self.index = i
+
     def get_value(self):
         return self.value
 
