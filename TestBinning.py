@@ -15,7 +15,7 @@ class TestBin(unittest.TestCase):
         self.bin.add_coin(c2, 8)
         self.bin.add_coin(c3, 9)
 
-    def test_bin_init(self):
+    def test_bin_class(self):
         self.assertEqual('test', self.bin.label)
         self.assertEqual(6, self.bin.weight)
         self.assertEqual(3, len(self.bin))
@@ -59,8 +59,6 @@ class TestBin(unittest.TestCase):
         self.assertEqual(3, c1.value)
         self.assertEqual(3, self.bin.weight)
         self.assertEqual(2, len(self.bin))
-
-
 
 
 if __name__ == '__main__':
