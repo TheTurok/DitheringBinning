@@ -1,4 +1,5 @@
 import time
+import random
 
 import coin as c
 import bin as b
@@ -24,8 +25,8 @@ class DitheringBinning:
         self._min_value = None
         self._max_value = None
         self._label = []
-        self._total_weight = 0  # NOT USING CURRENTLY
-        self._bin_count = 0   # NOT USING CURRENTLY
+        self._total_weight = 0
+        self._bin_count = 0
 
     @property
     def bins(self):
@@ -35,7 +36,7 @@ class DitheringBinning:
     @property
     def coin_list(self):
         """:obj:'list' of :obj:'coin': Property of DB coin list"""
-        return self.coin_list
+        return self._coin_list
 
     @property
     def min_value(self):
@@ -55,6 +56,14 @@ class DitheringBinning:
     def max_value(self, value):
         self._max_value = value
 
+    @property
+    def total_weight(self):
+        return self._total_weight
+
+    @total_weight.setter
+    def total_weight(self, value):
+        self._total_weight = value
+
     def _setup_coins(self, values, weight):
         """Turn the input of values and weight into coins
 
@@ -64,15 +73,17 @@ class DitheringBinning:
             values: the input values
             weight: the weight of each value
         """
+
         for i in range(0, len(values)):  # Making Coins
             value = values[i]
-            if value or not math.isnan(value):
-                coin = c.Coin(value, weight[i], i)
-                self._coin_list.append(coin)
-                if self._min_value is None or self._min_value > value:
+            if value and not math.isnan(value):
+                self.total_weight += weight[i]  # Sum total weight of coins
+                coin = c.Coin(value, weight[i])
+                self.coin_list.append(coin)
+                if self.min_value is None or self.min_value > value:
                     self._min_value = value
-                if self._max_value is None or self._max_value < value:
-                    self._max_value = value
+                if self.max_value is None or self.max_value < value:
+                    self.max_value = value
 
     def _setup_bins(self, labels, count):
         """Setup empty bins with appropriate labels
@@ -81,10 +92,11 @@ class DitheringBinning:
             labels: list of labels for the bins
             count: the number of bins
         """
-        self._bin_count = count
+
+        self.bin_count = count
         for i in range(0, count):
             empty_bin = b.Bin(labels[i])
-            self._bins.append(empty_bin)
+            self.bins.append(empty_bin)
 
     def distribution_by_value(self, coin_list, bin_list):
         """Distribute coins into bins according to its value
@@ -93,24 +105,58 @@ class DitheringBinning:
             coin_list: list of coins
             bin_list: list of nins
         """
-        split = int((self._max_value - self._min_value) / self._bin_count)
 
-        for cl in coin_list:
-            fit = int((cl.value - self._min_value) / split)
-            if fit == split:
-                bin_list[fit-1].add_coin(cl)
+        split = int((self.max_value - self.min_value) / self.bin_count)
+
+        for index, cl in enumerate(coin_list):
+            fit = int((cl.value - self.min_value) / split)
+            if fit == split:  # Edge Case: If fit hits the max value, put in last bin
+                bin_list[fit-1].add_coin(cl, index)
             else:
-                bin_list[fit].add_coin(cl)
+                bin_list[fit].add_coin(cl, index)
 
     def dithering_balance(self, bins):
-        """Balance the weight in each bin by moving coins around
+        """Balance the weight in each bin by moving coins around after coins are distributed in bins already.
 
-        Using Dithering, choosing the min/max value of each bins with random weight until the weights are close to
-        being evenly distributed.
+        Using Dithering, we distribute min/max value of each bins and move around coins with random weight chosen until
+        the weight in the bin are close to being evenly distributed. -- Start with in-order, reverse, in-order again for
+        full balance. Each run, we keep pushing to the next bin until its weight is less than the bin weight / 3 + 1.
+        Plus one so because we are flattening the weights into ints after division. (e.g. int(10 /3) = 3.33 = 3) Since
+        we remove a coin first to check if to see if the current weight is less then the even split + 1. approximately
+        even.
 
         Args:
             bins: list of bins that hold coins
         """
+
+        aprx_weight = int(self.total_weight / self.bin_count) + 1
+
+        # In-Order
+        for i in range(0, self.bin_count-1):
+            bin = bins[i]
+            while bin.weight > aprx_weight:
+                max_value = max([v.value for v in bin.coins.values()])
+                filtered_values = {k: v for (k, v) in bin.coins.items() if v.value >= max_value}
+                coin_index = random.choice(list(filtered_values))
+                bins[i+1].add_coin(bin.remove_coin(coin_index), coin_index)
+
+        # Reverse
+        for i in range(self.bin_count-1, 0, -1):
+            bin = bins[i]
+            while bin.weight > aprx_weight:
+                min_value = min([v.value for v in bin.coins.values()])
+                filtered_values = {k: v for (k, v) in bin.coins.items() if v.value <= min_value}
+                coin_index = random.choice(list(filtered_values))
+                bins[i-1].add_coin(bin.remove_coin(coin_index), coin_index)
+
+        # In-Order
+        for i in range(0, self.bin_count - 1):
+            bin = bins[i]
+            while bin.weight > aprx_weight:
+                max_value = max([v.value for v in bin.coins.values()])
+                filtered_values = {k: v for (k, v) in bin.coins.items() if v.value >= max_value}
+                coin_index = random.choice(list(filtered_values))
+                bins[i + 1].add_coin(bin.remove_coin(coin_index), coin_index)
 
         return bins
 
@@ -123,27 +169,28 @@ class DitheringBinning:
             coin_list: list of coins
             bin_list: list of nins
         """
+
+        if len(x) != len(weight):
+            raise ValueError('Inputs of values and weights have different lengths')
+
         self._setup_coins(x, weight)
         self._setup_bins(bin_label, bin_count)
         self.distribution_by_value(self._coin_list, self._bins)  # Distribute by value initially
-
         self.dithering_balance(self.bins)
 
 
 if __name__ == "__main__":
     start_time = time.time()
 
-    x = [1,2,3,4,5,6,7,8,9,10]
-    weights = [1,1,1,1,1,1,1,1,1,1]
+    x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, None, 10]
+    weights = [1, 1, 1, 1, 5, 5, 1, 1, 4, 4, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     bl = ['b1', 'b2', 'b3']
     bc = len(bl)
 
     db = DitheringBinning()
     db.binning(x, weights, bl, bc)
-    for bin in db.bins:
-        print(bin.label)
-        for coin in bin.coins:
-            print(coin.value)
+    for b in db.bins:
+        print(b)
 
     end_time = time.time()
     print("Total time to run this program: " + str(end_time-start_time) + " seconds")
