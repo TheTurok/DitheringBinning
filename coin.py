@@ -2,8 +2,8 @@ class Coin:
     """Coin Properties
 
     Attributes:
-        value (int): Value of the coin.
-        weight (int): the weight of the coin
+        _value (int): Value of the coin.
+        _weight (int): the weight of the coin
     """
 
     def __init__(self, value, weight):

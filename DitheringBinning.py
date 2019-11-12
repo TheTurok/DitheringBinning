@@ -10,13 +10,13 @@ class DitheringBinning:
     """Class to distribute the coins in their appropriate bins according to its weight and values.
 
     Attributes:
-        coin_list (list: coin object): A list to hold values and weights after it has been converted to coins.
-        bins (list: bin object): A list of bins to distribute the coins into
-        start_range (int): The lowest value of a coin
-        end_range (int): The highest value of a coin
-        label (list: str): The output on the distribution of coins into certain bins
-        total_weight (int): total weight of all coins
-        bin_count (int): Number of bins
+        _coin_list (list: coin object): A list to hold values and weights after it has been converted to coins.
+        _bins (list: bin object): A list of bins to distribute the coins into
+        _min_value (int): The lowest value of a coin
+        _max_value (int): The highest value of a coin
+        _total_weight (int): total weight of all coins
+        _bin_count (int): Number of bins\
+        _label (str): Labels for respective values and weight
     """
 
     def __init__(self):
@@ -26,6 +26,7 @@ class DitheringBinning:
         self._max_value = None
         self._total_weight = 0
         self._bin_count = 0
+        self._label = []
 
     @property
     def bins(self):
@@ -57,11 +58,17 @@ class DitheringBinning:
 
     @property
     def total_weight(self):
+        """"int: Total weight of all the coin"""
         return self._total_weight
 
     @total_weight.setter
     def total_weight(self, value):
         self._total_weight = value
+
+    @property
+    def label(self):
+        """list: str: Holds all the respective value's binning"""
+        return self._label
 
     def _setup_coins(self, values, weight):
         """Turn the input of values and weight into coins
@@ -83,14 +90,21 @@ class DitheringBinning:
                     self._min_value = value
                 if self.max_value is None or self.max_value < value:
                     self.max_value = value
+            else:
+                if value is None:
+                    self.label[i] = 'None'
+                if math.isnan(value):
+                    self.label[i] = 'NaN'
 
     def _setup_bins(self, labels, count):
-        """Setup empty bins with appropriate labels
+        """Setup empty label and empty bins with appropriate labels
 
         Args:
             labels: list of labels for the bins
             count: the number of bins
         """
+        for i in range(0, len(self.coin_list)):
+            self.label.append('')  # Fill in Label Empty so we can insert values in its according index
 
         self.bin_count = count
         for i in range(0, count):
@@ -166,15 +180,11 @@ class DitheringBinning:
             The label Output
         """
 
-        label = []
-        for i in range(0, len(self.coin_list)):
-            label.append('')
-
         for bin in self.bins:
             for k, v in bin.coins.items():
-                label[k] = bin.label
+                self.label[k] = bin.label
 
-        return label
+        return self.label
 
     def binning(self, x, weight, bin_label, bin_count):
         """Calling all the functions to perform Dithering for the coin distributions
@@ -195,8 +205,8 @@ class DitheringBinning:
         if len(x) != len(weight):
             raise ValueError('Inputs of values and weights have different lengths')
 
-        self._setup_coins(x, weight)
         self._setup_bins(bin_label, bin_count)  # Setup Coins and Empty Bins
+        self._setup_coins(x, weight)
         self.distribution_by_value(self._coin_list, self._bins)  # Distribute by value initially
         self.dithering_balance(self.bins)  # Balance weights afterwards
 
