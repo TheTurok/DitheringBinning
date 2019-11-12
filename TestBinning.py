@@ -51,7 +51,6 @@ class TestBin(unittest.TestCase):
         self.assertEqual(9, self.bin.weight)
 
     def test_remove_coin(self):
-        print(self.bin)
         self.assertRaises(ValueError, self.bin.remove_coin, -1)  # test removing negative index
         self.assertRaises(ValueError, self.bin.remove_coin, 99)  # not in bin
         c1 = self.bin.remove_coin(9)
@@ -63,3 +62,4 @@ class TestBin(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
