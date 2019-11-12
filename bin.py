@@ -1,10 +1,13 @@
+import math
+
+
 class Bin:
     """Bins to hold coin values.
 
     Attributes:
-        label (str): Bin's label
-        weight (int): Bin's weight, coin's total weight
-        coins (object: coin): The coins inside this bin with index as its key
+        _label (str): Bin's label
+        _weight (int): Bin's weight, coin's total weight
+        _coins (object: coin): The coins inside this bin with index as its key
     """
 
     def __init__(self, label):
@@ -15,6 +18,9 @@ class Bin:
     def __str__(self):
         list = [v.value for (k, v) in self.coins.items()]
         return "Bin: " + str(self.label) + " -- Weight: " + str(self.weight) + " -- Coins: " + str(list)
+
+    def __len__(self):
+        return len(self.coins)
 
     @property
     def label(self):
@@ -42,9 +48,11 @@ class Bin:
             coin: the coin object to put into the coins dict
             index: the key the coin will have
         """
-
-        self.weight += coin.weight
-        self.coins[index] = coin
+        if index in self.coins:
+            raise ValueError('Coin with unique index already exists')
+        if coin.value and not math.isnan(coin.value):
+            self.weight += coin.weight
+            self.coins[index] = coin
 
     def remove_coin(self, index):
         """Remove coin from the bin with its index from list as key
@@ -55,9 +63,12 @@ class Bin:
         Returns:
              Returns the index and coin removed
         """
+        if index in self.coins:
+            coin = self.coins[index]
+            self.weight -= coin.weight
+            del self.coins[index]
+            return coin
+        else:
+            raise ValueError('Index is not in this bin')
 
-        coin = self.coins[index]
-        self.weight -= coin.weight
-        del self.coins[index]
-        return coin
 
