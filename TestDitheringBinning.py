@@ -1,5 +1,4 @@
 import unittest
-import DitheringBinning as db
 import coin
 import bin
 
@@ -26,8 +25,6 @@ class TestDitheringBinning(unittest.TestCase):
         b.add_coin(c3, 2)
         self.assertEqual(len(b), 1)
         self.assertRaises(ValueError, b.add_coin, c2, 0)  # test adding coin in same index
-
-
 
 
 if __name__ == '__main__':
