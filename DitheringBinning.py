@@ -179,6 +179,9 @@ class DitheringBinning:
     def binning(self, x, weight, bin_label, bin_count):
         """Calling all the functions to perform Dithering for the coin distributions
 
+        This function was mainly made to run the program all at once. We can call the inner functions piece by peice for
+        more control and testing purposes.
+
         Args:
             x: values
             weight: weight of the values
@@ -193,9 +196,10 @@ class DitheringBinning:
             raise ValueError('Inputs of values and weights have different lengths')
 
         self._setup_coins(x, weight)
-        self._setup_bins(bin_label, bin_count)
+        self._setup_bins(bin_label, bin_count)  # Setup Coins and Empty Bins
         self.distribution_by_value(self._coin_list, self._bins)  # Distribute by value initially
-        self.dithering_balance(self.bins)
+        self.dithering_balance(self.bins)  # Balance weights afterwards
+
         return self.labeling()
 
 
