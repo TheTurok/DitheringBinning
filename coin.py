@@ -1,20 +1,22 @@
-
-
 class Coin:
-    def __init__(self, value, weight, index):
-        self.value = value
-        self.index = index
-        self.weight = weight
+    """Coin Properties
 
-    def get_weight(self):
-        return self.weight
+    Attributes:
+        value (int): Value of the coin.
+        weight (int): the weight of the coin
+    """
 
-    def get_index(self):
-        return self.index
+    def __init__(self, value, weight):
+        self._value = value
+        self._weight = weight
 
-    def set_index(self, i):
-        self.index = i
+    @property
+    def weight(self):
+        """int: Property of coin's weight"""
+        return self._weight
 
-    def get_value(self):
-        return self.value
+    @property
+    def value(self):
+        """int: Property of coin's value"""
+        return self._value
 

@@ -1,6 +1,7 @@
 import unittest
 import DitheringBinning
 
+
 class TestDitheringBinning(unittest.TestCase):
     """Testing Dithering functions"""
 
