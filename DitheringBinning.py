@@ -121,10 +121,10 @@ class DitheringBinning:
             bin_list: list of nins
         """
 
-        split = int((self.max_value - self.min_value) / self.bin_count)
+        split = int((self.max_value - self.min_value) / self.bin_count)  # Normal distribution by values for each bin
 
         for index, cl in enumerate(coin_list):
-            fit = int((cl.value - self.min_value) / split)
+            fit = int((cl.value - self.min_value) / split)  # Diving by split should give bin int count
             if fit == split:  # Edge Case: If fit hits the max value, put in last bin
                 bin_list[fit-1].add_coin(cl, index)
             else:
@@ -147,25 +147,25 @@ class DitheringBinning:
         aprx_weight = int(self.total_weight / self.bin_count) + 1
 
         # In-Order
-        for i in range(0, self.bin_count-1):
+        for i in range(0, self.bin_count-1):  # Loop until 2nd to last iem
             bin = bins[i]
-            while bin.weight > aprx_weight:
-                max_value = max([v.value for v in bin.coins.values()])
-                filtered_values = {k: v for (k, v) in bin.coins.items() if v.value >= max_value}
-                coin_index = random.choice(list(filtered_values))
-                bins[i+1].add_coin(bin.remove_coin(coin_index), coin_index)
+            while bin.weight > aprx_weight:  # Keep adding coins on the other bins until it's below max_value
+                max_value = max([v.value for v in bin.coins.values()])  # Gat max value as going up the bin count
+                filtered_values = {k: v for (k, v) in bin.coins.items() if v.value >= max_value}  # Values on edge
+                coin_index = random.choice(list(filtered_values))  # Dithering Random weight of that value
+                bins[i+1].add_coin(bin.remove_coin(coin_index), coin_index)  # add removed coin
 
         # Reverse
-        for i in range(self.bin_count-1, 0, -1):
+        for i in range(self.bin_count-1, 0, -1):  # Going in reverse
             bin = bins[i]
             while bin.weight > aprx_weight:
-                min_value = min([v.value for v in bin.coins.values()])
+                min_value = min([v.value for v in bin.coins.values()])  # Min values going down the bin count
                 filtered_values = {k: v for (k, v) in bin.coins.items() if v.value <= min_value}
                 coin_index = random.choice(list(filtered_values))
                 bins[i-1].add_coin(bin.remove_coin(coin_index), coin_index)
 
-        # In-Order
-        for i in range(0, self.bin_count - 1):
+        # Another In-Order
+        for i in range(0, self.bin_count - 1):  # For better spread if most of values were concentrated near end of bins
             bin = bins[i]
             while bin.weight > aprx_weight:
                 max_value = max([v.value for v in bin.coins.values()])
@@ -182,7 +182,7 @@ class DitheringBinning:
 
         for bin in self.bins:
             for k, v in bin.coins.items():
-                self.label[k] = bin.label
+                self.label[k] = bin.label  # coin key respective to value index
 
         return self.label
 
