@@ -23,7 +23,7 @@ class Bin:
 
     @property
     def coins(self):
-        """:obj:'coin': Property of bin's coins"""
+        """:dict:'coin': Property of bin's coins"""
         return self._coins
 
     @property

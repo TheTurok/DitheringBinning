@@ -24,7 +24,6 @@ class DitheringBinning:
         self._bins = []
         self._min_value = None
         self._max_value = None
-        self._label = []
         self._total_weight = 0
         self._bin_count = 0
 
@@ -101,6 +100,8 @@ class DitheringBinning:
     def distribution_by_value(self, coin_list, bin_list):
         """Distribute coins into bins according to its value
 
+        Since every index is unique, we will use that as key for coins to store it in bins.
+
         Args:
             coin_list: list of coins
             bin_list: list of nins
@@ -158,16 +159,34 @@ class DitheringBinning:
                 coin_index = random.choice(list(filtered_values))
                 bins[i + 1].add_coin(bin.remove_coin(coin_index), coin_index)
 
-        return bins
+    def labeling(self):
+        """Labeling the coins in the bins
+
+        Returns:
+            The label Output
+        """
+
+        label = []
+        for i in range(0, len(self.coin_list)):
+            label.append('')
+
+        for bin in self.bins:
+            for k, v in bin.coins.items():
+                label[k] = bin.label
+
+        return label
 
     def binning(self, x, weight, bin_label, bin_count):
-        """Distribute coins into bins according to its value
-            TODO
-            TODO
-            TODO
+        """Calling all the functions to perform Dithering for the coin distributions
+
         Args:
-            coin_list: list of coins
-            bin_list: list of nins
+            x: values
+            weight: weight of the values
+            bin_label: list bin labels
+            bin_count: the number of bins
+
+        Returns:
+            The label Output
         """
 
         if len(x) != len(weight):
@@ -177,18 +196,24 @@ class DitheringBinning:
         self._setup_bins(bin_label, bin_count)
         self.distribution_by_value(self._coin_list, self._bins)  # Distribute by value initially
         self.dithering_balance(self.bins)
+        return self.labeling()
 
 
 if __name__ == "__main__":
     start_time = time.time()
 
-    x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, None, 10]
+    # Change Values Here to see Results!
+    x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     weights = [1, 1, 1, 1, 5, 5, 1, 1, 4, 4, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     bl = ['b1', 'b2', 'b3']
+    # End of Change Values
+
     bc = len(bl)
 
+    # Run Program and Print Values
     db = DitheringBinning()
-    db.binning(x, weights, bl, bc)
+    label = db.binning(x, weights, bl, bc)
+    print(label)
     for b in db.bins:
         print(b)
 
