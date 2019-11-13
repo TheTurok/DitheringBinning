@@ -1,5 +1,5 @@
 import unittest
-import coin
+from coin import Coin
 
 
 class TestCoin(unittest.TestCase):
@@ -7,7 +7,7 @@ class TestCoin(unittest.TestCase):
 
     def test_coin(self):
         """Testing Coin object instance"""
-        c = coin.Coin(1, 9)
+        c = Coin(1, 9)
         self.assertEqual(1, c.value)
         self.assertEqual(9, c.weight)
 

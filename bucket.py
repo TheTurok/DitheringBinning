@@ -1,7 +1,6 @@
-import math
 
 
-class Bin:
+class Bucket:
     """Bins to hold coin values.
 
     Attributes:

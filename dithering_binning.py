@@ -2,7 +2,7 @@ import time
 import random
 
 from coin import Coin
-from bin import Bin
+from bucket import Bucket
 
 
 class DitheringBinning:
@@ -125,7 +125,7 @@ class DitheringBinning:
         self.bin_count = count
 
         for i in range(0, count):
-            empty_bin = Bin(labels[i])
+            empty_bin = Bucket(labels[i])
             self.bins.append(empty_bin)
 
     def _send_bin(self, offset_value, split):

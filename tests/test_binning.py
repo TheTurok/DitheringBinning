@@ -1,16 +1,16 @@
 import unittest
-import coin
-import bin
+from coin import Coin
+from bucket import Bin
 
 
 class TestBin(unittest.TestCase):
     """Testing Bin Class and functions"""
 
     def setUp(self):
-        self.bin = bin.Bin('test')
-        c1 = coin.Coin(1, 1)
-        c2 = coin.Coin(2, 2)
-        c3 = coin.Coin(3, 3)
+        self.bin = Bin('test')
+        c1 = Coin(1, 1)
+        c2 = Coin(2, 2)
+        c3 = Coin(3, 3)
         self.bin.add_coin(c1, 7)
         self.bin.add_coin(c2, 8)
         self.bin.add_coin(c3, 9)
@@ -23,31 +23,31 @@ class TestBin(unittest.TestCase):
 
     def test_add_coin(self):
         """Testing to add a coin and many different values"""
-        c1 = coin.Coin(-1, 1)
+        c1 = Coin(-1, 1)
         self.bin.add_coin(c1, 0)  # Normal Coin with negative value
         self.assertEqual(4, len(self.bin))
         self.assertEqual(-1, self.bin.coins[0].value)
         self.assertEqual(1, self.bin.coins[0].weight)
 
-        c2 = coin.Coin(99, 2)
+        c2 = Coin(99, 2)
         self.bin.add_coin(c2, 3)
         self.assertEqual(5, len(self.bin))
         self.assertEqual(99, self.bin.coins[3].value)
         self.assertEqual(2, self.bin.coins[3].weight)
         self.assertEqual(9, self.bin.weight)  # Check total weight
 
-        c3 = coin.Coin(None, 3)
+        c3 = Coin(None, 3)
         self.bin.add_coin(c3, 2)  # None Value
         self.assertEqual(5, len(self.bin))
 
-        c4 = coin.Coin(float('nan'), 10)
+        c4 = Coin(float('nan'), 10)
         self.bin.add_coin(c4, 2)  # None Value
         self.assertEqual(5, len(self.bin))
 
-        c6 = coin.Coin(1, 1)
+        c6 = Coin(1, 1)
         self.assertRaises(ValueError, self.bin.add_coin, c6, 0)  # test adding coin in same index
 
-        c5 = coin.Coin(99, -1)
+        c5 = Coin(99, -1)
         self.assertRaises(ValueError, self.bin.add_coin, c5, 0)  # test adding coin with negative index
         self.assertEqual(5, len(self.bin))
         self.assertEqual(9, self.bin.weight)
