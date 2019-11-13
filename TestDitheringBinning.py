@@ -13,6 +13,7 @@ class TestDitheringBinning(unittest.TestCase):
         self.label_length = len(self.labels)
 
     def test_setup_coins(self):
+        """Testing setup_coins function"""
         self.db_object.setup_coins([], [])  # empty test
         self.assertEqual(0, self.db_object.total_weight)
         self.assertEqual(0, len(self.db_object.coin_list))
@@ -25,6 +26,7 @@ class TestDitheringBinning(unittest.TestCase):
             self.assertEqual(i, self.db_object.coin_list[i].value)
 
     def test_setup_bins(self):
+        """Testing setup bins function"""
         self.assertRaises(ValueError, self.db_object.setup_bins, [], 0, 0)  # empty test
 
         self.db_object.setup_bins(self.labels, self.label_length, len(self.x))
@@ -36,6 +38,7 @@ class TestDitheringBinning(unittest.TestCase):
         self.assertEqual('b3', self.db_object.bins[2].label)
 
     def test_distribution_by_value(self):
+        """Testing distribution_by_value function"""
         self.db_object.setup_coins(self.x, self.weights)
         self.db_object.setup_bins(self.labels, self.label_length, len(self.x))
         self.db_object.distribution_by_value()
@@ -51,6 +54,7 @@ class TestDitheringBinning(unittest.TestCase):
         self.assertTrue(coin.value == 8 for index, coin in self.db_object.bins[2].coins)
 
     def test_inverse_distribution_by_value(self):
+        """Test db in values in reversed order"""
         self.x.reverse()
         self.db_object.setup_coins(self.x, self.weights)
         self.db_object.setup_bins(self.labels, self.label_length, len(self.x))
@@ -67,13 +71,15 @@ class TestDitheringBinning(unittest.TestCase):
         self.assertTrue(coin.value == 8 for index, coin in self.db_object.bins[2].coins)
 
     def test_negative_distribution_by_value(self):
+        """DB with negative value added."""
         self.x.append(-10)
         self.weights.append(1)
         self.db_object.setup_coins(self.x, self.weights)
         self.db_object.setup_bins(self.labels, self.label_length, len(self.x))
         self.db_object.distribution_by_value()
 
-    def test_dithering_balance(self):
+    def test_dithering_balancd_values(self):
+        """Normal values to test"""
         self.db_object.binning(self.x, self.weights, self.labels, self.label_length)
         self.assertTrue(coin.value == 0 for index, coin in self.db_object.bins[0].coins)
         self.assertTrue(coin.value == 1 for index, coin in self.db_object.bins[0].coins)
@@ -86,6 +92,7 @@ class TestDitheringBinning(unittest.TestCase):
         self.assertTrue(coin.value == 8 for index, coin in self.db_object.bins[2].coins)
 
     def test_db_inbalance(self):
+        """Inbalance of weight on one side"""
         for i in range(0, 3):
             self.x.append(i+8)
             self.weights.append(3)

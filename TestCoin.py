@@ -6,6 +6,7 @@ class TestCoin(unittest.TestCase):
     """Testing Coin Class"""
 
     def test_coin(self):
+        """Testing Coin object instance"""
         c = coin.Coin(1, 9)
         self.assertEqual(1, c.value)
         self.assertEqual(9, c.weight)

@@ -29,10 +29,10 @@ class DitheringBinning:
         self._label = []
 
     def __str__(self):
-        p = ['Labeling:', self.label, '---']
-        for b in self.bins:
-            p.append(b)
-        return '\n'.join(map(str, p))
+        db_info = ['Labeling:', self.label, '---']
+        for bin in self.bins:
+            db_info.append(bin)
+        return '\n'.join(map(str, db_info))
 
     @property
     def bins(self):
@@ -186,7 +186,7 @@ class DitheringBinning:
             bin = self.bins[i]
             while bin.weight >= threshold and bin.weight != 0:  # Keep adding coins on next bin until it pass threshold
                 max_value = max([v.value for v in bin.coins.values()])  # Gat max value as going up the bin count
-                filtered_values = {k: v for (k, v) in bin.coins.items() if v.value >= max_value}  # Values on edge
+                filtered_values = {k: coin for (k, coin) in bin.coins.items() if coin.value >= max_value}  # Values on edge
                 coin_index = random.choice(list(filtered_values))  # Dithering Random weight of that value
                 self.bins[i+1].add_coin(bin.remove_coin(coin_index), coin_index)  # add removed coin
 
@@ -195,7 +195,7 @@ class DitheringBinning:
             bin = self.bins[i]
             while bin.weight >= threshold and bin.weight != 0:
                 min_value = min([v.value for v in bin.coins.values()])  # Min values going down the bin count
-                filtered_values = {k: v for (k, v) in bin.coins.items() if v.value <= min_value}
+                filtered_values = {k: coin for (k, coin) in bin.coins.items() if coinvalue <= min_value}
                 coin_index = random.choice(list(filtered_values))
                 self.bins[i-1].add_coin(bin.remove_coin(coin_index), coin_index)
 
@@ -243,7 +243,7 @@ if __name__ == "__main__":
     start_time = time.time()
 
     # Change Values Here to see Results!
-    x = [-1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    x = [-1, 0, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     weights = [1, 1, 1, 1, 5, 5, 1, 1, 4, 4, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     bl = ['b1', 'b2', 'b3']

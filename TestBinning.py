@@ -16,11 +16,13 @@ class TestBin(unittest.TestCase):
         self.bin.add_coin(c3, 9)
 
     def test_bin_class(self):
+        """Testing the class instance"""
         self.assertEqual('test', self.bin.label)
         self.assertEqual(6, self.bin.weight)
         self.assertEqual(3, len(self.bin))
 
     def test_add_coin(self):
+        """Testing to add a coin and many different values"""
         c1 = coin.Coin(-1, 1)
         self.bin.add_coin(c1, 0)  # Normal Coin with negative value
         self.assertEqual(4, len(self.bin))
@@ -51,6 +53,7 @@ class TestBin(unittest.TestCase):
         self.assertEqual(9, self.bin.weight)
 
     def test_remove_coin(self):
+        """Testing remove_coin function"""
         self.assertRaises(ValueError, self.bin.remove_coin, -1)  # test removing negative index
         self.assertRaises(ValueError, self.bin.remove_coin, 99)  # not in bin
         c1 = self.bin.remove_coin(9)
