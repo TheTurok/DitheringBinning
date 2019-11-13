@@ -53,7 +53,6 @@ class TestDitheringBinning(unittest.TestCase):
         self.assertEqual(7, self.db_object.bins[2].coins[7].value)
         self.assertEqual(8, self.db_object.bins[2].coins[8].value)
 
-
     def test_reverse_distribution_by_value(self):
         """Test db in values in reversed order"""
         self.x.reverse()

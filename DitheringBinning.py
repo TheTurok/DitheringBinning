@@ -249,13 +249,22 @@ if __name__ == "__main__":
     db = DitheringBinning()
     label = db.binning(x, weights, bin_labels, number_of_bins)
 
+    print()
     print('Return of function')
     print(label)
-    print('----------------------------------')
     print()
-    print('----------------------------------')
+
+    # Accuracy Testing
+    for bin in db.bins:
+        split_weight = int(db.total_weight / db.bin_count)
+        percent_off = (bin.weight - split_weight) / db.total_weight
+        print(str(bin.label) + " is " + "{0:.2%}".format(abs(percent_off)) + " off from perfect distribution:")
+
+    print()
+
     print('Dithering Binning Data')
     print(db)
+    print()
 
     end_time = time.time()
     print("Total time to run this program: " + str(end_time-start_time) + " seconds")
