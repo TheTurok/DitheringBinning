@@ -211,7 +211,7 @@ class DitheringBinning:
     def binning(self, x, weight, bin_label, bin_count):
         """Calling all the functions to perform Dithering for the coin distributions
 
-        This function was mainly made to run the program all at once. We can call the inner functions piece by peice for
+        This function was mainly made to run the program all at once. We can call the inner functions piece by piece for
         more control and testing purposes.
 
         Args:

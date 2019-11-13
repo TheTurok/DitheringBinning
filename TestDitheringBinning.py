@@ -43,32 +43,33 @@ class TestDitheringBinning(unittest.TestCase):
         self.db_object.setup_bins(self.labels, self.label_length, len(self.x))
         self.db_object.distribution_by_value()
 
-        self.assertTrue(coin.value == 0 for index, coin in self.db_object.bins[0].coins)
-        self.assertTrue(coin.value == 1 for index, coin in self.db_object.bins[0].coins)
-        self.assertTrue(coin.value == 2 for index, coin in self.db_object.bins[1].coins)
-        self.assertTrue(coin.value == 3 for index, coin in self.db_object.bins[1].coins)
-        self.assertTrue(coin.value == 4 for index, coin in self.db_object.bins[2].coins)
-        self.assertTrue(coin.value == 5 for index, coin in self.db_object.bins[2].coins)
-        self.assertTrue(coin.value == 6 for index, coin in self.db_object.bins[2].coins)
-        self.assertTrue(coin.value == 7 for index, coin in self.db_object.bins[2].coins)
-        self.assertTrue(coin.value == 8 for index, coin in self.db_object.bins[2].coins)
+        self.assertEqual(0, self.db_object.bins[0].coins[0].value)
+        self.assertEqual(1, self.db_object.bins[0].coins[1].value)
+        self.assertEqual(2, self.db_object.bins[0].coins[2].value)
+        self.assertEqual(3, self.db_object.bins[1].coins[3].value)
+        self.assertEqual(4, self.db_object.bins[1].coins[4].value)
+        self.assertEqual(5, self.db_object.bins[1].coins[5].value)
+        self.assertEqual(6, self.db_object.bins[2].coins[6].value)
+        self.assertEqual(7, self.db_object.bins[2].coins[7].value)
+        self.assertEqual(8, self.db_object.bins[2].coins[8].value)
 
-    def test_inverse_distribution_by_value(self):
+
+    def test_reverse_distribution_by_value(self):
         """Test db in values in reversed order"""
         self.x.reverse()
         self.db_object.setup_coins(self.x, self.weights)
         self.db_object.setup_bins(self.labels, self.label_length, len(self.x))
         self.db_object.distribution_by_value()
 
-        self.assertTrue(coin.value == 0 for index, coin in self.db_object.bins[0].coins)
-        self.assertTrue(coin.value == 1 for index, coin in self.db_object.bins[0].coins)
-        self.assertTrue(coin.value == 2 for index, coin in self.db_object.bins[1].coins)
-        self.assertTrue(coin.value == 3 for index, coin in self.db_object.bins[1].coins)
-        self.assertTrue(coin.value == 4 for index, coin in self.db_object.bins[2].coins)
-        self.assertTrue(coin.value == 5 for index, coin in self.db_object.bins[2].coins)
-        self.assertTrue(coin.value == 6 for index, coin in self.db_object.bins[2].coins)
-        self.assertTrue(coin.value == 7 for index, coin in self.db_object.bins[2].coins)
-        self.assertTrue(coin.value == 8 for index, coin in self.db_object.bins[2].coins)
+        self.assertEqual(0, self.db_object.bins[0].coins[8].value)
+        self.assertEqual(1, self.db_object.bins[0].coins[7].value)
+        self.assertEqual(2, self.db_object.bins[0].coins[6].value)
+        self.assertEqual(3, self.db_object.bins[1].coins[5].value)
+        self.assertEqual(4, self.db_object.bins[1].coins[4].value)
+        self.assertEqual(5, self.db_object.bins[1].coins[3].value)
+        self.assertEqual(6, self.db_object.bins[2].coins[2].value)
+        self.assertEqual(7, self.db_object.bins[2].coins[1].value)
+        self.assertEqual(8, self.db_object.bins[2].coins[0].value)
 
     def test_negative_distribution_by_value(self):
         """DB with negative value added."""
@@ -81,17 +82,57 @@ class TestDitheringBinning(unittest.TestCase):
     def test_dithering_balancd_values(self):
         """Normal values to test"""
         self.db_object.binning(self.x, self.weights, self.labels, self.label_length)
-        self.assertTrue(coin.value == 0 for index, coin in self.db_object.bins[0].coins)
-        self.assertTrue(coin.value == 1 for index, coin in self.db_object.bins[0].coins)
-        self.assertTrue(coin.value == 2 for index, coin in self.db_object.bins[0].coins)
-        self.assertTrue(coin.value == 3 for index, coin in self.db_object.bins[1].coins)
-        self.assertTrue(coin.value == 4 for index, coin in self.db_object.bins[1].coins)
-        self.assertTrue(coin.value == 5 for index, coin in self.db_object.bins[1].coins)
-        self.assertTrue(coin.value == 6 for index, coin in self.db_object.bins[2].coins)
-        self.assertTrue(coin.value == 7 for index, coin in self.db_object.bins[2].coins)
-        self.assertTrue(coin.value == 8 for index, coin in self.db_object.bins[2].coins)
+        self.assertEqual(0, self.db_object.bins[0].coins[0].value)
+        self.assertEqual(1, self.db_object.bins[0].coins[1].value)
+        self.assertEqual(2, self.db_object.bins[0].coins[2].value)
+        self.assertEqual(3, self.db_object.bins[1].coins[3].value)
+        self.assertEqual(4, self.db_object.bins[1].coins[4].value)
+        self.assertEqual(5, self.db_object.bins[1].coins[5].value)
+        self.assertEqual(6, self.db_object.bins[2].coins[6].value)
+        self.assertEqual(7, self.db_object.bins[2].coins[7].value)
+        self.assertEqual(8, self.db_object.bins[2].coins[8].value)
 
-    def test_db_inbalance(self):
+    def test_labeling(self):
+        """Check if Labels came out right"""
+        self.x.append(float('nan'))  # Handling None and Nan Values
+        self.x.append(None)
+        self.weights.append(1)
+        self.weights.append(1)
+        self.db_object.binning(self.x, self.weights, self.labels, self.label_length)
+
+        self.assertEqual('b1', self.db_object.label[0])
+        self.assertEqual('b1', self.db_object.label[1])
+        self.assertEqual('b1', self.db_object.label[2])
+        self.assertEqual('b1', self.db_object.label[3])
+        self.assertEqual('b1', self.db_object.label[4])
+        self.assertEqual('b2', self.db_object.label[5])
+        self.assertEqual('b2', self.db_object.label[6])
+        self.assertEqual('b3', self.db_object.label[7])
+        self.assertEqual('b3', self.db_object.label[8])
+        self.assertEqual('NaN', self.db_object.label[9])
+        self.assertEqual('NaN', self.db_object.label[10])
+
+    def test_db_value_inbalance(self):
+        """"Inbalance of values"""
+        self.x.append(1)
+        for i in range(0, 45):
+            self.x.append(9)
+        for i in range(0, 45):
+            self.x.append(10)
+        self.weights = [1] * len(self.x)
+        self.db_object.binning(self.x, self.weights, self.labels, self.label_length)
+
+        for k, coin in self.db_object.bins[0].coins.items():
+            if coin.value == 10:
+                self.assertTrue(False)
+        for k, coin in self.db_object.bins[1].coins.items():
+            if coin.value < 9:
+                self.assertTrue(False)
+        for k, coin in self.db_object.bins[2].coins.items():
+            if coin.value != 10:
+                self.assertTrue(False)
+
+    def test_db_weight_inbalance(self):
         """Inbalance of weight on one side"""
         for i in range(0, 3):
             self.x.append(i+8)
@@ -102,9 +143,7 @@ class TestDitheringBinning(unittest.TestCase):
             self.assertTrue(self.db_object.bins[i].weight == 6)
 
     def test_db_zero_weights(self):
-        """" Test with values and weight staggered but each have even amount of weight
-
-        """
+        """" Test weight with zero but each have even amount of weight"""
         self.x = [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3]
         self.weights = [0] * len(self.x)
         self.db_object.binning(self.x, self.weights, self.labels, self.label_length)
@@ -112,12 +151,11 @@ class TestDitheringBinning(unittest.TestCase):
             self.assertTrue(len(self.db_object.bins[i]) == 5)
 
     def test_db_stagger_weights(self):
-        """" Test with values and weight staggered but each have even amount of weight
-
-        """
+        """" Test with values and weight staggered but each have even amount of weight"""
         self.x = [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3]
         self.weights = [10, 6, 4, 2, 1, 1, 1, 1, 1, 1, 1, 2, 4, 6, 10]
         self.db_object.binning(self.x, self.weights, self.labels, self.label_length)
+        #print(self.db_object)
 
     def test_weight_fluctuations(self):
         print()
