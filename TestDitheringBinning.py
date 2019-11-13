@@ -1,30 +1,41 @@
 import unittest
-import coin
-import bin
+import DitheringBinning as db
 
 
 class TestDitheringBinning(unittest.TestCase):
     """Testing Dithering Binning functions"""
 
-    def test_coin(self):
-        c = coin.Coin(1, 9)
-        self.assertEqual(c.value, 1)
-        self.assertEqual(c.weight, 9)
+    def setUp(self):
+        self.the_bins = db.DitheringBinning()
+        self.x = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        self.weight = [1, 1, 1, 1, 1, 1, 1, 1, 1]
+        self.labels = ['b1', 'b2', 'b3']
+        self.label_length = len(self.labels)
 
-    def test_bin(self):
-        b = bin.Bin('test')
-        self.assertEqual(b.label, 'test')
-        c1 = coin.Coin(-1, 1)
-        c2 = coin.Coin(1, 1)
-        c3 = coin.Coin(None, 3)
-        c4 = coin.Coin(float('nan'), 10)
-        b.add_coin(c1, 0)
-        self.assertEqual(len(b), 1)
-        self.assertEqual(b.coins[0].value, -1)
-        self.assertEqual(b.coins[0].weight, 1)
-        b.add_coin(c3, 2)
-        self.assertEqual(len(b), 1)
-        self.assertRaises(ValueError, b.add_coin, c2, 0)  # test adding coin in same index
+    def test_setup_coins(self):
+        self.the_bins.setup_coins([], [])  # empty test
+        self.assertEqual(0, self.the_bins.total_weight)
+        self.assertEqual(0, len(self.the_bins.coin_list))
+
+        self.assertRaises(ValueError, self.the_bins.setup_coins, [1, 2], [0])  # test uneven weights and values
+
+        self.the_bins.setup_coins(self.x, self.weight)
+        self.assertEqual(9, self.the_bins.total_weight)
+        for i in range(0, 9):
+            self.assertEqual(i, self.the_bins.coin_list[i].value)
+
+
+    def test_setup_bins(self):
+        self.the_bins.setup_bins([], 0, 0)  # empty test
+        self.assertEqual(0, len(self.the_bins.bins))
+        self.assertEqual(0, len(self.the_bins.label))
+
+        #self.binning.setup_bins(self.labels, self.label_length, len(self.x))
+        #self.assertEqual(0, len(self.binning.bins))
+        #self.assertEqual(0, len(self.binning.label))
+
+
+
 
 
 if __name__ == '__main__':
