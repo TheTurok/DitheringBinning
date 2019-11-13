@@ -52,7 +52,7 @@ class Bin:
             raise ValueError('Coin with unique index already exists')
         if index < 0:
             raise ValueError('Invalid Index: Coin index cannot be below zero')
-        if not (coin.value is None or math.isnan(coin.value)):
+        if isinstance(coin.value, int):
             self.weight += coin.weight
             self.coins[index] = coin
 

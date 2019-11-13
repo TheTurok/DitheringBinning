@@ -168,13 +168,11 @@ class DitheringBinning:
         the weight in the bin are close to being evenly distributed. -- Start with in-order then reverse for
         full balance. Each run, we keep pushing to the next bin until its weight is less than the threshold.
 
-        threshold:
+        threshold
             1. Weight / number of bins: the least amount of weight in each bin
             2. Average weight in each coin: To not over add coins in a bin accounting with average value.
-            3. Threshold >= :
-
-        Args:
-            bins: list of bins that hold coins
+            3. Threshold >= : threshold is naturally bigger than a split even weight for each bin, so we use = sign to
+            favor more balance/dithering, as it would be a ~5050 anyways for next value to make it go below split weight
         """
 
         split_weight = int(self.total_weight / self.bin_count)  # All bins weight is evenly split
@@ -195,7 +193,7 @@ class DitheringBinning:
             bin = self.bins[i]
             while bin.weight >= threshold and bin.weight != 0:
                 min_value = min([v.value for v in bin.coins.values()])  # Min values going down the bin count
-                filtered_values = {k: coin for (k, coin) in bin.coins.items() if coinvalue <= min_value}
+                filtered_values = {k: coin for (k, coin) in bin.coins.items() if coin.value <= min_value}
                 coin_index = random.choice(list(filtered_values))
                 self.bins[i-1].add_coin(bin.remove_coin(coin_index), coin_index)
 
