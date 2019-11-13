@@ -29,7 +29,7 @@ class DitheringBinning:
         self._label = []
 
     def __str__(self):
-        db_info = ['Labeling:', self.label, '---']
+        db_info = ['Labeling:', self.label, '---', "Total Weight: " + str(self.total_weight), '---']
         for bin in self.bins:
             db_info.append(bin)
         return '\n'.join(map(str, db_info))
@@ -261,8 +261,7 @@ if __name__ == "__main__":
         print(str(bin.label) + " is " + "{0:.2%}".format(abs(percent_off)) + " off from perfect distribution:")
 
     print()
-
-    print('Dithering Binning Data')
+    print('Dithering Binning Object')
     print(db)
     print()
 
