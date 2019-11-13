@@ -149,16 +149,6 @@ class TestDitheringBinning(unittest.TestCase):
         for i in range(0, self.label_length):
             self.assertTrue(len(self.db_object.bins[i]) == 5)
 
-    def test_db_stagger_weights(self):
-        """" Test with values and weight staggered but each have even amount of weight"""
-        self.x = [1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3]
-        self.weights = [10, 6, 4, 2, 1, 1, 1, 1, 1, 1, 1, 2, 4, 6, 10]
-        self.db_object.binning(self.x, self.weights, self.labels, self.label_length)
-        #print(self.db_object)
-
-    def test_weight_fluctuations(self):
-        print()
-
 
 if __name__ == '__main__':
     unittest.main()

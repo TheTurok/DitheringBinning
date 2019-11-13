@@ -155,6 +155,7 @@ class DitheringBinning:
 
             offset_value = int(coin.value - self.min_value)
             fit = self._send_bin(offset_value, split)
+
             if fit >= self.bin_count:  # Edge Case: If fit hits the max value, put in last bin
                 self.bins[self.bin_count - 1].add_coin(coin, index)
             else:
@@ -183,7 +184,7 @@ class DitheringBinning:
             bin = self.bins[i]
             while bin.weight >= threshold and bin.weight != 0:  # Keep adding coins on next bin until it pass threshold
                 max_value = max([v.value for v in bin.coins.values()])  # Gat max value as going up the bin count
-                filtered_values = {k: coin for (k, coin) in bin.coins.items() if coin.value >= max_value}  # Values on edge
+                filtered_values = {k: coin for (k, coin) in bin.coins.items() if coin.value >= max_value}  # Edge Values
                 coin_index = random.choice(list(filtered_values))  # Dithering Random weight of that value
                 self.bins[i+1].add_coin(bin.remove_coin(coin_index), coin_index)  # add removed coin
 
