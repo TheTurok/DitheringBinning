@@ -119,6 +119,9 @@ class TestDitheringBinning(unittest.TestCase):
         self.weights = [10, 6, 4, 2, 1, 1, 1, 1, 1, 1, 1, 2, 4, 6, 10]
         self.db_object.binning(self.x, self.weights, self.labels, self.label_length)
 
+    def test_weight_fluctuations(self):
+        print()
+
 
 if __name__ == '__main__':
     unittest.main()
