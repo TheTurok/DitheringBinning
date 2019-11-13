@@ -1,12 +1,12 @@
 import unittest
-import DitheringBinning as db
+from dithering_binning import DitheringBinning
 
 
 class TestDitheringBinning(unittest.TestCase):
     """Testing Dithering Binning functions"""
 
     def setUp(self):
-        self.db_object = db.DitheringBinning()
+        self.db_object = DitheringBinning()
         self.x = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         self.weights = [1, 1, 1, 1, 1, 1, 1, 1, 1]
         self.labels = ['b1', 'b2', 'b3']

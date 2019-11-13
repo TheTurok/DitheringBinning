@@ -1,9 +1,8 @@
 import time
 import random
 
-import coin as c
-import bin as b
-import math
+from coin import Coin
+from bin import Bin
 
 
 class DitheringBinning:
@@ -30,8 +29,8 @@ class DitheringBinning:
 
     def __str__(self):
         db_info = ['Labeling:', self.label, '---', "Total Weight: " + str(self.total_weight), '---']
-        for bin in self.bins:
-            db_info.append(bin)
+        for bucket in self.bins:
+            db_info.append(bucket)
         return '\n'.join(map(str, db_info))
 
     @property
@@ -99,7 +98,7 @@ class DitheringBinning:
 
         for i in range(0, len(values)):  # Making Coins
             value = values[i]
-            coin = c.Coin(value, weights[i])
+            coin = Coin(value, weights[i])
             self.coin_list.append(coin)
 
             if isinstance(value, int):
@@ -126,7 +125,7 @@ class DitheringBinning:
         self.bin_count = count
 
         for i in range(0, count):
-            empty_bin = b.Bin(labels[i])
+            empty_bin = Bin(labels[i])
             self.bins.append(empty_bin)
 
     def _send_bin(self, offset_value, split):
@@ -181,20 +180,20 @@ class DitheringBinning:
 
         # In-Order
         for i in range(0, self.bin_count-1):  # Loop until 2nd to last item
-            bin = self.bins[i]
-            while bin.weight >= threshold and bin.weight != 0:  # Keep adding coins on next bin until it pass threshold
-                max_value = max([v.value for v in bin.coins.values()])  # Gat max value as going up the bin count
-                filtered_values = {k: coin for (k, coin) in bin.coins.items() if coin.value >= max_value}  # Edge Values
+            bucket = self.bins[i]
+            while bucket.weight >= threshold and bucket.weight != 0:  # Keep adding coins on next bin until it pass threshold
+                max_value = max([v.value for v in bucket.coins.values()])  # Gat max value as going up the bin count
+                filtered_values = {k: coin for (k, coin) in bucket.coins.items() if coin.value >= max_value}  # Edge Values
                 coin_index = random.choice(list(filtered_values))  # Dithering Random weight of that value
-                self.bins[i+1].add_coin(bin.remove_coin(coin_index), coin_index)  # add removed coin
+                self.bins[i+1].add_coin(bucket.remove_coin(coin_index), coin_index)  # add removed coin
 
         for i in range(self.bin_count-1, 0, -1):  # Reverse
-            bin = self.bins[i]
-            while bin.weight >= threshold and bin.weight != 0:
-                min_value = min([v.value for v in bin.coins.values()])  # Min values going down the bin count
-                filtered_values = {k: coin for (k, coin) in bin.coins.items() if coin.value <= min_value}
+            bucket = self.bins[i]
+            while bucket.weight >= threshold and bucket.weight != 0:
+                min_value = min([v.value for v in bucket.coins.values()])  # Min values going down the bin count
+                filtered_values = {k: coin for (k, coin) in bucket.coins.items() if coin.value <= min_value}
                 coin_index = random.choice(list(filtered_values))
-                self.bins[i-1].add_coin(bin.remove_coin(coin_index), coin_index)
+                self.bins[i-1].add_coin(bucket.remove_coin(coin_index), coin_index)
 
     def labeling(self):
         """Labeling the coins in the bins
@@ -203,9 +202,9 @@ class DitheringBinning:
             The label Output
         """
 
-        for bin in self.bins:
-            for k, v in bin.coins.items():
-                self.label[k] = bin.label  # coin key respective to value index
+        for bucket in self.bins:
+            for k, v in bucket.coins.items():
+                self.label[k] = bucket.label  # coin key respective to value index
 
         return self.label
 
@@ -256,10 +255,10 @@ if __name__ == "__main__":
     print()
 
     # Accuracy Testing
-    for bin in db.bins:
+    for bucket in db.bins:
         split_weight = int(db.total_weight / db.bin_count)
-        percent_off = (bin.weight - split_weight) / db.total_weight
-        print(str(bin.label) + " is " + "{0:.2%}".format(abs(percent_off)) + " off from perfect distribution:")
+        percent_off = (bucket.weight - split_weight) / db.total_weight
+        print(str(bucket.label) + " is " + "{0:.2%}".format(abs(percent_off)) + " off from perfect distribution:")
 
     print()
     print('Dithering Binning Object')
